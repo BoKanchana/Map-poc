@@ -14,11 +14,14 @@ class ViewController: UIViewController {
   @IBOutlet weak var mapView: MKMapView!
   
   let locationManager = CLLocationManager()
-  let regionInMeter: Double = 10000
+  let regionInMeter: Double = 20000
+  let scbCoordinate = CLLocationCoordinate2D(latitude: 13.8253414, longitude: 100.5668163)
 
   override func viewDidLoad() {
     super.viewDidLoad()
     checkLocationServices()
+    setLocation()
+    
   }
   
   func setupLocationManager() {
@@ -38,14 +41,20 @@ class ViewController: UIViewController {
     case .authorizedWhenInUse:
       mapView.showsUserLocation = true
       locationManager.startUpdatingLocation()
-      if let location = locationManager.location?.coordinate {
-        mapView.centerViewOnMap(location, regionInMeter: regionInMeter)
-      }
     case .notDetermined:
       locationManager.requestWhenInUseAuthorization()
     default:
       break
     }
+  }
+  
+  func setLocation() {
+    let scbLocation = PublicLocation(title: "Siam Commercial Bank",
+                                     locationName: "Headquarters",
+                                     discipline: nil,
+                                     coordinate: scbCoordinate)
+    mapView.addAnnotation(scbLocation)
+    mapView.centerViewOnMap(scbCoordinate, regionInMeter: regionInMeter)
   }
 }
 
@@ -54,6 +63,10 @@ extension MKMapView {
     let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeter, longitudinalMeters: regionInMeter)
     setRegion(region, animated: true)
   }
+}
+
+extension ViewController: MKMapViewDelegate {
+  
 }
 
 extension ViewController: CLLocationManagerDelegate {
