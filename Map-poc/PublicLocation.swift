@@ -32,4 +32,8 @@ class PublicLocation: NSObject, MKAnnotation {
   var subtitle: String? {
     return locationName
   }
+  
+  var image: UIImage {
+    return #imageLiteral(resourceName: "Flag")
+  }
 }

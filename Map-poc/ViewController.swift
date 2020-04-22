@@ -53,6 +53,7 @@ class ViewController: UIViewController {
                                      locationName: "Headquarters",
                                      discipline: nil,
                                      coordinate: scbCoordinate)
+    mapView.register(PublicLocationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     mapView.addAnnotation(scbLocation)
     mapView.centerViewOnMap(scbCoordinate, regionInMeter: regionInMeter)
   }
