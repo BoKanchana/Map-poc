@@ -48,6 +48,33 @@ class ViewController: UIViewController {
     }
   }
   
+  func getDirection() {
+    guard let location = locationManager.location?.coordinate else { return }
+    let request = generateDirectionRequest(from: location, to: scbCoordinate)
+    let direction = MKDirections(request: request)
+    
+    direction.calculate { [weak self] (response, error) in
+      guard let response = response else { return }
+      for route in response.routes {
+        self?.mapView.addOverlay(route.polyline)
+        self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+      }
+    }
+  }
+  
+  func generateDirectionRequest(from coordinate1: CLLocationCoordinate2D, to coordinate2: CLLocationCoordinate2D) -> MKDirections.Request {
+    let start = MKPlacemark(coordinate: coordinate1)
+    let destination = MKPlacemark(coordinate: coordinate2)
+    
+    let request = MKDirections.Request()
+    request.source = MKMapItem(placemark: start)
+    request.destination = MKMapItem(placemark: destination)
+    request.transportType = .automobile
+    request.requestsAlternateRoutes = true
+    
+    return request
+  }
+  
   func setLocation() {
     let scbLocation = PublicLocation(title: "Siam Commercial Bank",
                                      locationName: "Headquarters",
@@ -56,6 +83,7 @@ class ViewController: UIViewController {
     mapView.register(PublicLocationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     mapView.addAnnotation(scbLocation)
     mapView.centerViewOnMap(scbCoordinate, regionInMeter: regionInMeter)
+    getDirection()
   }
 }
 
@@ -67,7 +95,13 @@ extension MKMapView {
 }
 
 extension ViewController: MKMapViewDelegate {
-  
+  func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    let renderer = MKPolylineRenderer(overlay: overlay)
+    renderer.strokeColor = .blue
+    renderer.alpha = 0.5
+    renderer.lineWidth = 4
+    return renderer
+  }
 }
 
 extension ViewController: CLLocationManagerDelegate {
