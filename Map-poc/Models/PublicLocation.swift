@@ -32,10 +32,6 @@ class PublicLocation: NSObject, MKAnnotation {
   }
   
   func updateDistance(with distances: Double) {
-    let formatter = NumberFormatter()
-    let meters = NSNumber(value: distances / 1000)
-    formatter.maximumFractionDigits = 2
-    
-    self.distance = formatter.string(from: meters)
+    self.distance = distances.distanceInKilometers
   }
 }

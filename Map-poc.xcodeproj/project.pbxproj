@@ -17,6 +17,8 @@
 		CC2B3A85245042960079F164 /* Map_pocUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B3A84245042960079F164 /* Map_pocUITests.swift */; };
 		CC2B3A9424504A2F0079F164 /* PublicLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B3A9224504A2F0079F164 /* PublicLocationView.swift */; };
 		CC2B3A9524504A2F0079F164 /* PublicLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B3A9324504A2F0079F164 /* PublicLocation.swift */; };
+		CCCB4BB224516D0400D31474 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCB4BB124516D0400D31474 /* Map.swift */; };
+		CCCB4BB72451AD2B00D31474 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCB4BB62451AD2B00D31474 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		CC2B3A86245042960079F164 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2B3A9224504A2F0079F164 /* PublicLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicLocationView.swift; sourceTree = "<group>"; };
 		CC2B3A9324504A2F0079F164 /* PublicLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicLocation.swift; sourceTree = "<group>"; };
+		CCCB4BB124516D0400D31474 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		CCCB4BB62451AD2B00D31474 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,14 +107,15 @@
 		CC2B3A61245042940079F164 /* Map-poc */ = {
 			isa = PBXGroup;
 			children = (
+				CCCB4BB024516CE300D31474 /* Helpers */,
+				CCCB4BAF24516C5800D31474 /* Models */,
+				CCCB4BB324516F5F00D31474 /* MapScene */,
 				CC2B3A62245042940079F164 /* AppDelegate.swift */,
 				CC2B3A64245042940079F164 /* SceneDelegate.swift */,
-				CC2B3A66245042940079F164 /* ViewController.swift */,
 				CC2B3A68245042940079F164 /* Main.storyboard */,
 				CC2B3A6B245042960079F164 /* Assets.xcassets */,
 				CC2B3A6D245042960079F164 /* LaunchScreen.storyboard */,
 				CC2B3A70245042960079F164 /* Info.plist */,
-				CC2B3A9324504A2F0079F164 /* PublicLocation.swift */,
 				CC2B3A9224504A2F0079F164 /* PublicLocationView.swift */,
 			);
 			path = "Map-poc";
@@ -132,6 +137,31 @@
 				CC2B3A86245042960079F164 /* Info.plist */,
 			);
 			path = "Map-pocUITests";
+			sourceTree = "<group>";
+		};
+		CCCB4BAF24516C5800D31474 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CC2B3A9324504A2F0079F164 /* PublicLocation.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CCCB4BB024516CE300D31474 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CCCB4BB124516D0400D31474 /* Map.swift */,
+				CCCB4BB62451AD2B00D31474 /* LocationManager.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		CCCB4BB324516F5F00D31474 /* MapScene */ = {
+			isa = PBXGroup;
+			children = (
+				CC2B3A66245042940079F164 /* ViewController.swift */,
+			);
+			path = MapScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,7 +298,9 @@
 				CC2B3A67245042940079F164 /* ViewController.swift in Sources */,
 				CC2B3A63245042940079F164 /* AppDelegate.swift in Sources */,
 				CC2B3A9524504A2F0079F164 /* PublicLocation.swift in Sources */,
+				CCCB4BB72451AD2B00D31474 /* LocationManager.swift in Sources */,
 				CC2B3A9424504A2F0079F164 /* PublicLocationView.swift in Sources */,
+				CCCB4BB224516D0400D31474 /* Map.swift in Sources */,
 				CC2B3A65245042940079F164 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
