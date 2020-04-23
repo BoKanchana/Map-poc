@@ -15,13 +15,23 @@ class ViewController: UIViewController {
   
   let locationManager = CLLocationManager()
   let regionInMeter: Double = 20000
+  
   let scbCoordinate = CLLocationCoordinate2D(latitude: 13.8253414, longitude: 100.5668163)
-
+  let scbLocation = PublicLocation(title: "Siam Commercial Bank",
+                                   locationName: "",
+                                   discipline: "Bank",
+                                   coordinate: CLLocationCoordinate2D(latitude: 13.8253414, longitude: 100.5668163))
+  var shortestRoute: MKRoute? {
+    didSet {
+      guard let distance = shortestRoute?.distance else { return }
+      scbLocation.updateDistance(with: Double(distance))
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     checkLocationServices()
     setLocation()
-    
   }
   
   func setupLocationManager() {
@@ -48,16 +58,21 @@ class ViewController: UIViewController {
     }
   }
   
+  func showOverlay() {
+    guard let shortestRoute = shortestRoute else { return }
+    self.mapView.addOverlay(shortestRoute.polyline)
+    self.mapView.setVisibleMapRect(shortestRoute.polyline.boundingMapRect, animated: true)
+  }
+  
   func getDirection() {
     guard let location = locationManager.location?.coordinate else { return }
     let request = generateDirectionRequest(from: location, to: scbCoordinate)
     let direction = MKDirections(request: request)
     
-    direction.calculate { [weak self] (response, error) in
+    direction.calculate { (response, error) in
       guard let response = response else { return }
-      for route in response.routes {
-        self?.mapView.addOverlay(route.polyline)
-        self?.mapView.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+      if let shortestRoute = response.routes.sorted(by: { $0.expectedTravelTime > $1.expectedTravelTime }).first {
+        self.shortestRoute = shortestRoute
       }
     }
   }
@@ -76,10 +91,6 @@ class ViewController: UIViewController {
   }
   
   func setLocation() {
-    let scbLocation = PublicLocation(title: "Siam Commercial Bank",
-                                     locationName: "Headquarters",
-                                     discipline: nil,
-                                     coordinate: scbCoordinate)
     mapView.register(PublicLocationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     mapView.addAnnotation(scbLocation)
     mapView.centerViewOnMap(scbCoordinate, regionInMeter: regionInMeter)
@@ -101,6 +112,14 @@ extension ViewController: MKMapViewDelegate {
     renderer.alpha = 0.5
     renderer.lineWidth = 4
     return renderer
+  }
+  
+  func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    showOverlay()
+  }
+  
+  func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+    mapView.removeOverlays(mapView.overlays)
   }
 }
 

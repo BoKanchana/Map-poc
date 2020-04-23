@@ -11,29 +11,31 @@ import MapKit
 
 class PublicLocation: NSObject, MKAnnotation {
   let title: String?
-  let locationName: String?
+  var distance: String?
   let discipline: String?
   let coordinate: CLLocationCoordinate2D
 
-  init(
-    title: String?,
-    locationName: String?,
-    discipline: String?,
-    coordinate: CLLocationCoordinate2D
-  ) {
+  init(title: String?, locationName: String?, discipline: String?, coordinate: CLLocationCoordinate2D) {
     self.title = title
-    self.locationName = locationName
+    self.distance = locationName
     self.discipline = discipline
     self.coordinate = coordinate
-    
     super.init()
   }
 
   var subtitle: String? {
-    return locationName
+    return distance
   }
   
   var image: UIImage {
     return #imageLiteral(resourceName: "Flag")
+  }
+  
+  func updateDistance(with distances: Double) {
+    let formatter = NumberFormatter()
+    let meters = NSNumber(value: distances / 1000)
+    formatter.maximumFractionDigits = 2
+    
+    self.distance = formatter.string(from: meters)
   }
 }
